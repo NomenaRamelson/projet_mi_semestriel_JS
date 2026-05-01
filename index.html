@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Finance Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- PAGE DE LOGIN -->
+<div id="loginPage" class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-4H9.5v-2H11V9h2v1.5h1.5v2H13v4z" fill="currentColor"/>
+        </svg>
+      </div>
+      <h1>Personal Finance Manager</h1>
+      <p>Connectez-vous pour gérer vos finances</p>
+    </div>
+    
+    <div id="loginError" class="error-message" style="display:none;"></div>
+    
+    <form id="loginForm" onsubmit="event.preventDefault(); login();">
+      <div class="input-group">
+        <label>Nom d'utilisateur</label>
+        <input type="text" id="loginUsername" placeholder="Rabearivony Sammy" required>
+      </div>
+      <div class="input-group">
+        <label>Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="••••••••••••••••" required>
+      </div>
+      <button type="submit" class="login-btn">Se connecter</button>
+      <p class="login-footer">veuillez vous connecter Merci</p>
+    </form>
+  </div>
+</div>
+
+<!-- APPLICATION PRINCIPALE (cachée par défaut) -->
+<div id="appContainer" style="display: none;">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-4H9.5v-2H11V9h2v1.5h1.5v2H13v4z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div>
+        <span class="brand-name">PFM</span>
+        <span class="brand-sub">Finance Manager</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-view="dashboard" href="#" onclick="switchView('dashboard',this);return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" opacity=".9"/>
+          <rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor" opacity=".5"/>
+          <rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor" opacity=".5"/>
+          <rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor" opacity=".3"/>
+        </svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a class="nav-item" data-view="budget" href="#" onclick="switchView('budget',this);return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Budget mensuel</span>
+      </a>
+      <a class="nav-item" data-view="upcoming" href="#" onclick="switchView('upcoming',this);return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Dépenses à venir</span>
+      </a>
+      <a class="nav-item" data-view="goals" href="#" onclick="switchView('goals',this);return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        <span>Objectifs</span>
+      </a>
+      <a class="nav-item" data-view="history" href="#" onclick="switchView('history',this);return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+          <polyline points="1 4 1 10 7 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3.51 15a9 9 0 1 0 .49-4.95" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Historique</span>
+      </a>
+      <a class="nav-item" data-view="settings" href="#" onclick="switchView('settings',this);return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Paramètres</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="month-badge">
+        <span class="month-dot"></span>
+        <span id="sidebar-month">Avr 2026</span>
+      </div>
+      <button onclick="logout()" class="logout-btn">Se déconnecter</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <!-- DASHBOARD -->
+    <section class="view active" id="view-dashboard">
+      <header class="view-header">
+        <div>
+          <h1 class="view-title">Tableau de bord</h1>
+          <p class="view-subtitle">Aperçu de vos finances</p>
+        </div>
+        <div class="month-nav">
+          <button class="month-btn" onclick="changeMonth(-1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <span class="month-label" id="dash-month">Avril 2026</span>
+          <button class="month-btn" onclick="changeMonth(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-balance">
+          <div class="kpi-label">Solde net</div>
+          <div class="kpi-value" id="kpi-balance">0 Ar</div>
+          <div class="kpi-trend trend-up">Chargement...</div>
+        </div>
+        <div class="kpi-card kpi-income">
+          <div class="kpi-label">Revenus</div>
+          <div class="kpi-value" id="kpi-income">0 Ar</div>
+          <div class="kpi-trend">Ce mois-ci</div>
+        </div>
+        <div class="kpi-card kpi-expense">
+          <div class="kpi-label">Dépenses</div>
+          <div class="kpi-value" id="kpi-expense">0 Ar</div>
+          <div class="kpi-trend">Ce mois-ci</div>
+        </div>
+        <div class="kpi-card kpi-savings">
+          <div class="kpi-label">Épargne totale</div>
+          <div class="kpi-value" id="kpi-savings">0 Ar</div>
+          <div class="kpi-trend">Objectifs actifs</div>
+        </div>
+      </div>
+
+      <div class="dash-body">
+        <div class="dash-left">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Répartition des dépenses</h2>
+              <span class="card-badge" id="expense-month">Avril 2026</span>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-canvas-wrap">
+                <canvas id="donut-chart" width="160" height="160"></canvas>
+                <div class="chart-center">
+                  <span class="chart-center-value" id="total-expenses">0</span>
+                  <span class="chart-center-label">Ar dépensés</span>
+                </div>
+              </div>
+              <div class="chart-legend" id="chart-legend">
+                <div class="legend-item">Chargement...</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Charges à venir</h2>
+              <a href="#" class="card-link" onclick="switchView('upcoming',document.querySelector('[data-view=upcoming]'));return false;">Voir tout →</a>
+            </div>
+            <ul class="upcoming-list" id="upcoming-list">
+              <li>Chargement...</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dash-right">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Objectifs d'épargne</h2>
+              <a href="#" class="card-link" onclick="switchView('goals',document.querySelector('[data-view=goals]'));return false;">Voir tout →</a>
+            </div>
+            <div class="goals-list" id="goals-list">
+              <div>Chargement...</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Transactions récentes</h2>
+              <a href="#" class="card-link" onclick="switchView('history',document.querySelector('[data-view=history]'));return false;">Voir tout →</a>
+            </div>
+            <ul class="tx-list" id="tx-list">
+              <li>Chargement...</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUDGET -->
+    <section class="view" id="view-budget">
+      <header class="view-header">
+        <div><h1 class="view-title">Budget mensuel</h1><p class="view-subtitle">Gérez vos revenus et dépenses</p></div>
+      </header>
+      <div class="placeholder-view">
+        <div class="placeholder-icon">📊</div>
+        <h2>Budget mensuel</h2>
+        <p>Cette vue sera construite prochainement.</p>
+      </div>
+    </section>
+
+    <!-- UPCOMING -->
+    <section class="view" id="view-upcoming">
+      <header class="view-header">
+        <div><h1 class="view-title">Dépenses à venir</h1><p class="view-subtitle">Charges récurrentes planifiées</p></div>
+      </header>
+      <div class="placeholder-view">
+        <div class="placeholder-icon">🗓️</div>
+        <h2>Dépenses à venir</h2>
+        <p>Cette vue sera construite prochainement.</p>
+      </div>
+    </section>
+
+    <!-- GOALS -->
+    <section class="view" id="view-goals">
+      <header class="view-header">
+        <div><h1 class="view-title">Objectifs d'épargne</h1><p class="view-subtitle">Suivez votre progression</p></div>
+      </header>
+      <div class="placeholder-view">
+        <div class="placeholder-icon">🎯</div>
+        <h2>Objectifs d'épargne</h2>
+        <p>Cette vue sera construite prochainement.</p>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="view" id="view-history">
+      <header class="view-header">
+        <div><h1 class="view-title">Historique</h1><p class="view-subtitle">Toutes vos transactions</p></div>
+      </header>
+      <div class="placeholder-view">
+        <div class="placeholder-icon">📋</div>
+        <h2>Historique des transactions</h2>
+        <p>Cette vue sera construite prochainement.</p>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings">
+      <header class="view-header">
+        <div><h1 class="view-title">Paramètres</h1><p class="view-subtitle">Catégories et préférences</p></div>
+      </header>
+      <div class="placeholder-view">
+        <div class="placeholder-icon">⚙️</div>
+        <h2>Paramètres</h2>
+        <p>Cette vue sera construite prochainement.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
