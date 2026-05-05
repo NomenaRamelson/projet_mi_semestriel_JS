@@ -1,13 +1,9 @@
-// ============================================================
-//  PFM — Personal Finance Manager  |  main.js  (complet)
-// ============================================================
-
 const MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin',
                 'Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 let curYear  = 2026;
 let curMonth = 3; // avril (0-indexé)
 
-// ── Auth ──────────────────────────────────────────────────
+// ── Auth ────
 const mockUser = { username: "Nomena", password: "garfilde" };
 let isAuthenticated = false;
 
@@ -36,7 +32,7 @@ function logout() {
     document.getElementById('loginPassword').value = '';
 }
 
-// ── Navigation ────────────────────────────────────────────
+// ── Navigation ────
 function switchView(viewId, navEl) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -51,7 +47,7 @@ function switchView(viewId, navEl) {
     if (viewId === 'settings') renderSettings();
 }
 
-// ── Utilitaires ───────────────────────────────────────────
+// ── Utilitaires ────
 function formatMoney(n) {
     return Number(n).toLocaleString('fr-FR') + ' Ar';
 }
@@ -67,7 +63,7 @@ function todayStr() {
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-// ── Données localStorage ──────────────────────────────────
+// ── Données localStorage ────
 function getData(key, def) {
     try { return JSON.parse(localStorage.getItem('pfm_' + key)) ?? def; }
     catch { return def; }
@@ -133,7 +129,7 @@ function getUpcoming() {
 }
 function saveUpcoming(list) { setData('upcoming', list); }
 
-// ── Rendu mois ────────────────────────────────────────────
+// ── Rendu mois ────
 function renderMonth() {
     document.getElementById('dash-month').textContent    = MONTHS[curMonth] + ' ' + curYear;
     document.getElementById('sidebar-month').textContent = MONTHS[curMonth].slice(0,3) + ' ' + curYear;
@@ -146,7 +142,7 @@ function changeMonth(delta) {
     loadDashboardData();
 }
 
-// ── DASHBOARD ─────────────────────────────────────────────
+// ── DASHBOARD ────
 async function loadDashboardData() {
     await new Promise(r => setTimeout(r, 200));
 
@@ -282,7 +278,7 @@ function loadUpcomingDash() {
     }).join('');
 }
 
-// ── VUE BUDGET ────────────────────────────────────────────
+// ── VUE BUDGET ────
 function renderBudget() {
     const mStr   = `${curYear}-${String(curMonth+1).padStart(2,'0')}`;
     const txs    = getTransactions().filter(t=>t.date.startsWith(mStr));
@@ -456,7 +452,7 @@ function deleteTransaction(id) {
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-// ── VUE DÉPENSES À VENIR ──────────────────────────────────
+// ── VUE DÉPENSES À VENIR ────
 function renderUpcoming() {
     const list  = getUpcoming().sort((a,b)=>a.day-b.day);
     const today = new Date().getDate();
@@ -543,7 +539,7 @@ function deleteUpcoming(id) {
     renderUpcoming();
 }
 
-// ── VUE OBJECTIFS ─────────────────────────────────────────
+// ── VUE OBJECTIFS ────
 function renderGoals() {
     const goals = getGoals();
     document.getElementById('view-goals').innerHTML = `
@@ -639,7 +635,7 @@ function deleteGoal(id) {
     loadDashboardData();
 }
 
-// ── VUE HISTORIQUE ────────────────────────────────────────
+// ── VUE HISTORIQUE ────
 let histFilter = { type: 'all', cat: 'all', search: '' };
 
 function renderHistory() {
@@ -718,7 +714,7 @@ function deleteTransactionHistory(id) {
     loadDashboardData();
 }
 
-// ── VUE PARAMÈTRES ────────────────────────────────────────
+// ── VUE PARAMÈTRES ────
 function renderSettings() {
     const cats = getCategories();
     document.getElementById('view-settings').innerHTML = `
@@ -845,7 +841,7 @@ function resetData() {
     alert('Données réinitialisées. Rechargez la page.');
 }
 
-// ── Init ──────────────────────────────────────────────────
+// ── Init ────
 window.addEventListener('load', () => {
     console.log("%c✅ Application PFM chargée avec succès", "color:#10b981;font-weight:bold");
 });
