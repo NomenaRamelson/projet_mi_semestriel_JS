@@ -357,11 +357,13 @@ function renderBudget() {
                     ${[...txs].sort((a,b)=>b.date.localeCompare(a.date)).map(tx => {
                         const cat = cats.find(c=>c.id===tx.categoryId)||{name:'Autre',icon:'📦'};
                         const isI = tx.type==='income';
+                        const d = new Date(tx.date);
+                        const dataLabel = d.getDate() + ' ' + MONTHS[d.getMonth()].slice(0,3);
                         return `<li class="tx-item">
                             <div class="tx-icon ${isI?'tx-icon--income':'tx-icon--expense'}">${cat.icon}</div>
                             <div class="tx-info">
                                 <span class="tx-label">${escapeHtml(tx.label)}</span>
-                                <span class="tx-cat">${tx.date.slice(8,10)} ${MONTHS[parseInt(tx.date.slice(5,7))-1].slice(0,3)}</span>
+                                <span class="tx-cat">${dataLabel}</span>
                             </div>
                             <div class="tx-right">
                                 <span class="tx-amount ${isI?'tx-amount--income':'tx-amount--expense'}">${isI?'+':'-'} ${formatMoney(tx.amount)}</span>
