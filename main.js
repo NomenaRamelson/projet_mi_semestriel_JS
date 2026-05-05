@@ -149,8 +149,6 @@ function changeMonth(delta) {
 // ── DASHBOARD ─────────────────────────────────────────────
 async function loadDashboardData() {
     await new Promise(r => setTimeout(r, 200));
-    const key = monthKey(curYear, curMonth + 1);
-    const txs  = getTransactions().filter(t => t.date.startsWith(key.replace('-0','-').replace(/^(\d{4})-(\d)$/,'$1-0$2')));
 
     // Recalcul propre du filtre mois
     const mStr = `${curYear}-${String(curMonth+1).padStart(2,'0')}`;
@@ -181,7 +179,8 @@ function loadRecentTransactions(monthTxs) {
     if (!recent.length) { txList.innerHTML = '<li class="tx-empty">Aucune transaction ce mois</li>'; return; }
     txList.innerHTML = recent.map(tx => {
         const cat  = cats.find(c=>c.id===tx.categoryId) || {name:'Autre',icon:'📦'};
-        const day  = tx.date.slice(8,10) + ' ' + MONTHS[parseInt(tx.date.slice(5,7))-1].slice(0,3);
+        const d = new Date(tx.date);
+        const day = d.getDate() + '' + MONTHS[parseInt(tx.date.slice(5,7))-1].slice(0,3);
         const isInc= tx.type==='income';
         const arrow= isInc
             ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2"/></svg>`
