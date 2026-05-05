@@ -438,7 +438,7 @@ function saveTransaction() {
     const cat    = document.getElementById('tx-cat').value;
     const type   = document.getElementById('tx-type').value;
     const date   = document.getElementById('tx-date').value;
-    if (!label || !amount || !date) { alert('Veuillez remplir tous les champs.'); return; }
+    if (!label || isNaN(amount) || !date) { alert('Veuillez remplir tous les champs.'); return; }
     const txs = getTransactions();
     txs.push({ id: 't' + Date.now(), label, amount, categoryId: cat, type, date });
     saveTransactions(txs);
