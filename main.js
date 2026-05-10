@@ -1,8 +1,7 @@
 const MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 let curYear  = 2026;
-let curMonth = 3; // avril (0-indexé)
+let curMonth = 3;
 
-// ── Auth ──
 const mockUser = { username: "Nomena", password: "garfilde" };
 let isAuthenticated = false;
 
@@ -33,7 +32,6 @@ function logout() {
     document.getElementById('loginPassword').value = '';
 }
 
-// ── Navigation ──
 function switchView(viewId, navEl) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -47,17 +45,12 @@ function switchView(viewId, navEl) {
     if (viewId === 'settings') renderSettings();
 }
 
-// ── Utilitaires ──
 function formatMoney(n) { return Number(n).toLocaleString('fr-FR') + ' Ar'; }
 function escapeHtml(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 function monthKey(y, m) { return `${y}-${String(m+1).padStart(2,'0')}`; }
 function todayStr() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-
-// ── Données localStorage ──
 function getData(key, def) { try { return JSON.parse(localStorage.getItem('pfm_' + key)) ?? def; } catch { return def; } }
 function setData(key, val) { localStorage.setItem('pfm_' + key, JSON.stringify(val)); }
-
-// Catégories par défaut (nécessaires)
 function getCategories() {
     return getData('categories', [
         { id: 'c1', name: 'Logement',    color: '#6366f1', type: 'expense' },
@@ -73,25 +66,21 @@ function getCategories() {
     ]);
 }
 
-// Transactions - VIDE au démarrage
 function getTransactions() {
     return getData('transactions', []);
 }
 function saveTransactions(txs) { setData('transactions', txs); }
 
-// Objectifs - VIDE au démarrage
 function getGoals() {
     return getData('goals', []);
 }
 function saveGoals(goals) { setData('goals', goals); }
 
-// Dépenses récurrentes - VIDE au démarrage
 function getUpcoming() {
     return getData('upcoming', []);
 }
 function saveUpcoming(list) { setData('upcoming', list); }
 
-// ── Rendu mois ──
 function renderMonth() {
     document.getElementById('dash-month').textContent    = MONTHS[curMonth] + ' ' + curYear;
     document.getElementById('sidebar-month').textContent = MONTHS[curMonth].slice(0,3) + ' ' + curYear;
@@ -1008,3 +997,11 @@ function generatePDF() {
 window.addEventListener('load', () => {
     console.log("Application PFM chargée");
 });
+
+function toggleMenu() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.querySelector('.overlay');
+    
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+}
