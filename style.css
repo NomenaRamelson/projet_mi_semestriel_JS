@@ -10,7 +10,7 @@
     --sidebar-w: 240px; --sidebar-bg: #1a1917; --sidebar-text: #d6d3d1; --sidebar-muted: #78716c;
     --sidebar-hover: rgba(255,255,255,0.06); --sidebar-active-bg: rgba(99,102,241,0.18); --sidebar-active-cl: #a5b4fc;
     --pad: 2rem; --radius: 16px;
-    --font: system-ui, -apple-system, sans-serif; --mono: ui-monospace, monospace;
+    --font: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
     --tf: 150ms ease; --tm: 280ms ease;
 }
 html, body { height: 100%; font-family: var(--font); background: var(--clr-bg); color: var(--clr-text-1); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
@@ -100,8 +100,8 @@ button { font-family: var(--font); cursor: pointer; border: none; background: no
 .tx-icon--income { background: var(--clr-green-light); color: var(--clr-green); }
 .tx-icon--expense { background: var(--clr-red-light); color: var(--clr-red); }
 .ico--utility { background: var(--clr-amber-light); color: var(--clr-amber); }
-.upcoming-info, .tx-info { flex: 1; display: flex; flex-direction: column; }
-.upcoming-name, .tx-label { font-size: 13.5px; font-weight: 500; }
+.upcoming-info, .tx-info { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.upcoming-name, .tx-label { font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .upcoming-date, .tx-cat { font-size: 11.5px; color: var(--clr-text-3); }
 .upcoming-amount, .tx-amount { font-family: var(--mono); font-size: 13px; font-weight: 500; white-space: nowrap; }
 .upcoming-amount { color: var(--clr-red); }
@@ -124,7 +124,7 @@ button { font-family: var(--font); cursor: pointer; border: none; background: no
 .btn-primary:hover { background: #4f46e5; box-shadow: 0 4px 12px rgba(99,102,241,0.25); }
 .btn-secondary { background: var(--clr-surface); color: var(--clr-text-2); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; border: 1px solid var(--clr-border); transition: all var(--tf); }
 .btn-secondary:hover { background: var(--clr-bg); color: var(--clr-text-1); }
-.btn-del { background: transparent; color: var(--clr-text-3); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 14px; transition: all var(--tf); }
+.btn-del { background: transparent; color: var(--clr-text-3); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 14px; transition: all var(--tf); flex-shrink: 0; }
 .btn-del:hover { background: var(--clr-red-light); color: var(--clr-red); }
 .input-group { display: flex; flex-direction: column; gap: 6px; }
 .input-group label { font-size: 13px; font-weight: 500; color: var(--clr-text-2); }
@@ -154,6 +154,8 @@ button { font-family: var(--font); cursor: pointer; border: none; background: no
 .badge-over { background: var(--clr-red-light); color: var(--clr-red); padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
 .cat-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--clr-border-soft); }
 .cat-row:last-child { border-bottom: none; }
+.cat-row > span:first-child { flex-shrink: 0; width: 24px; text-align: center; font-weight: 700; }
+.cat-row > span:nth-child(2) { flex: 1; min-width: 0; }
 .goals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 .goal-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: 14px; padding: 16px; transition: box-shadow var(--tm); }
 .goal-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -189,24 +191,3 @@ button { font-family: var(--font); cursor: pointer; border: none; background: no
 ::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 99px; }
 #loginError { display: none; }
 #appContainer { display: none; }
-
-.cat-row {
-display: flex;
-align-items: center;
-gap: 10px;
-padding: 10px 0;
-border-bottom: 1px solid var(--clr-border-soft);
-}
-
-.cat-row:last-child {
-border-bottom: none;
-}
-
-.cat-row > span:first-child {
-flex-shrink: 0;
-}
-
-.cat-row > span:nth-child(2) {
-flex: 1;
-min-width: 0;
-}
