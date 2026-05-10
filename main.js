@@ -1004,4 +1004,6 @@ function toggleMenu() {
     
     sidebar.classList.toggle('open');
     overlay.classList.toggle('active');
+    document.getElementById('sidebar').classList.toggle('open');
+    document.querySelector('.overlay').classList.toggle('active');
 }

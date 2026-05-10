@@ -33,6 +33,11 @@
 
     <!-- APP -->
     <div id="appContainer">
+      <header class="mobile-header">
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            <span>PFM Finance</span>
+      </header>
+      <div class="overlay" onclick="toggleMenu()"></div>
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <div class="brand-icon">PFM</div>
@@ -130,6 +135,8 @@
             <section id="view-settings" class="view"></section>
         </main>
     </div>
+
+    
 
   <div class="mobile-header">
       <button class="menu-btn" onclick="toggleMenu()">
